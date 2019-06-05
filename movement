@@ -1,0 +1,81 @@
+// Ready Project 
+// https://www.openprocessing.org/sketch/723983
+
+//Global scope
+int x = 0;
+int y = 0;
+
+int horizontal = 0;
+int vertical = 0;
+
+PImage img;
+
+void setup(){
+	background(0);
+	size(800, 600);
+	frameRate(60);
+	
+	img = loadImage("https://www.openprocessing.org/sketch/723983/files/137px-Spacecraft.png", "png");
+}
+
+void spaceship(){
+	//rect(x, y, 32, 32);
+	image(img, x, y, 32, 64);
+}
+
+//int testNum=0;
+
+void keyTyped(){
+		// Horizontal SPACESHIP	movement logic
+		if(key == 'd'){
+			//x = x + 1;
+			//x++;
+			horizontal = +1;
+		}
+		if(key == 'a'){
+			//x = x - 1;
+			//x--;
+			horizontal = -1;
+		}
+		// Vertical SPACESHIP movement logic
+		if(key =='s'){
+			//y = y + 1;
+			vertical = +1;
+		}
+		if(key == 'w'){
+			 //y = y - 1;
+			vertical = -1;
+		}
+}
+
+void keyReleased (){
+	if(key == 'd'){
+	//x = x + 1;
+	//x++;
+	horizontal = 0;
+	}
+	if(key == 'a'){
+		//x = x - 1;
+		//x--;
+		horizontal = 0;
+	}
+	// Vertical SPACESHIP movement logic
+	if(key =='s'){
+		//y = y + 1;
+		vertical = 0;
+	}
+	if(key == 'w'){
+		 //y = y - 1;
+		vertical = 0;
+	}
+//testNum++;
+	//print('the key was released ' + testNum + ' times');
+}
+
+void draw(){	
+	x = x + horizontal;
+	y = y + vertical;
+	
+	clear();
+	spaceship();
+}
