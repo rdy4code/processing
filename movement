@@ -8,6 +8,9 @@ int y = 0;
 int horizontal = 0;
 int vertical = 0;
 
+int shipWidth = 32;
+int shipHeight = 32;
+
 PImage img;
 
 void setup(){
@@ -19,8 +22,8 @@ void setup(){
 }
 
 void spaceship(){
-	//rect(x, y, 32, 32);
-	image(img, x, y, 32, 64);
+	rect(x, y, shipWidth, shipHeight);
+	//image(img, x, y, shipWidth, shipHeight);
 }
 
 //int testNum=0;
@@ -72,10 +75,13 @@ void keyReleased (){
 	//print('the key was released ' + testNum + ' times');
 }
 
-void draw(){	
-	x = x + horizontal;
+void draw(){
+    if (x + shipWidth + horizontal < 200) {
+       	x = x + horizontal;
+    }	
 	y = y + vertical;
 	
 	clear();
 	spaceship();
+    rect(200, 0, 32, 1000);
 }
