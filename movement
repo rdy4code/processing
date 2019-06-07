@@ -11,7 +11,7 @@ int vertical = 0;
 int shipWidth = 32;
 int shipHeight = 32;
 
-int wallThickness = 8;
+//int wallThickness = 8;
 
 PImage img;
 
@@ -24,6 +24,7 @@ void setup(){
 }
 
 void spaceship(){
+  fill(255, 0, 0);
 	rect(x, y, shipWidth, shipHeight);
 	//image(img, x, y, shipWidth, shipHeight);
 }
@@ -62,17 +63,52 @@ void keyReleased (){
 	}
 }
 
+
+bool isPointInsideBox(int x, int y, int boxX, int boxY, int boxWidth, int boxHeight){
+  bool isXInside = x >= boxX && x <= boxX + boxWidth;
+  bool isYInside = y >= boxY && x <= boxY + boxHeight;
+
+  return isXInside && isYInside;
+}
+
+bool isBoxInsideBox(int x, int y, int boxX, int boxY, int boxWidth, int boxHeight){
+	bool topLeftCornerCollision = isPointInsideBox(x + horizontal, y + vertical, boxX, boxY, boxWidth, boxHeight);
+  bool topRightCornerCollision = isPointInsideBox(x + horizontal + shipWidth, y + vertical, boxX, boxY, boxWidth, boxHeight);
+  bool bottomLeftCornerCollision = isPointInsideBox(x + horizontal, y + vertical + shipHeight, boxX, boxY, boxWidth, boxHeight); 
+  bool bottomRightCornerCollision = isPointInsideBox(x + horizontal + shipWidth, y + vertical + shipHeight, boxX, boxY, boxWidth, boxHeight);
+
+  return topRightCornerCollision || topLeftCornerCollision || bottomRightCornerCollision || bottomLeftCornerCollision;
+}
+
 void draw(){
-  if (x + shipWidth + horizontal < 200 && x + horizontal > wallThickness) {
-   	x = x + horizontal;
-  }
-  if (y + shipHeight + vertical < 200){
-	  y = y + vertical;
-	}
+
+  //Check for collision
+  //bool topLeftCornerCollision = isPointInsideBox(x + horizontal, y + vertical, 120, 120, 32,32);
+  // change coordinates 
+  bool topLeftCornerCollision = isPointInsideBox(x + horizontal, y + vertical, 120, 120, 32,32);
+  bool topRightCornerCollision = isPointInsideBox(x + horizontal + shipWidth, y + vertical, 120, 120, 32,32);
+  bool bottomLeftCornerCollision = isPointInsideBox(x + horizontal, y + vertical + shipHeight, 120, 120, 32,32); 
+  bool bottomRightCornerCollision = isPointInsideBox(x + horizontal + shipWidth, y + vertical + shipHeight, 120, 120, 32,32);
+
+  // if (x + shipWidth + horizontal < 200 && x + horizontal > wallThickness) {
+
+    if (!topLeftCornerCollision &&
+		!topRightCornerCollision &&
+		!bottomRightCornerCollision && !bottomLeftCornerCollision ){
+   	  x = x + horizontal;
+      y = y + vertical;
+     }
+
+  // }
+  // if (y + shipHeight + vertical < 200){
+	// }
 
 	clear();
 	spaceship();
-  rect(200, 0, wallThickness, 1000);
-  rect(0, 200, 1000, wallThickness);
-	rect(0,0, wallThickness, 1000);	
+
+  fill(255, 255, 255);
+  rect(120, 120, 32, 32);
+  // rect(200, 0, wallThickness, 1000);
+  // rect(0, 200, 1000, wallThickness);
+	// rect(0,0, wallThickness, 1000);	
 }
